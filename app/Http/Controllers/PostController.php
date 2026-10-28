@@ -6,11 +6,17 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
+    
     public function index()
     {
-        $posts = Post::latest()->get();
+        $search = request('search');
 
-        return view('posts.index', compact('posts'));
+        $posts = Post::latest()
+            ->where('title', 'like', '%' . $search . '%')
+            ->paginate(request('per_page', 10))
+            ->withQueryString();
+
+        return view('posts.index', compact('posts', 'search'));
     }
 
     public function trash()
