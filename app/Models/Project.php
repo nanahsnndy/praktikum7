@@ -11,9 +11,14 @@ class Project extends Model
         'category_id',
         'title',
         'slug',
+        'short_description',
         'description',
-        'thumbnail',
         'status',
+        'project_date',
+        'is_featured',
+        'project_url',
+        'repository_url',
+        'thumbnail',
     ];
 
     protected static function booted()
@@ -51,5 +56,10 @@ class Project extends Model
     {
         return $this->belongsToMany(Skill::class)
             ->withTimestamps();
+    }
+
+    public function technologies()
+    {
+        return $this->belongsToMany(Technology::class);
     }
 }

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Admin Dashboard</title>
+    <title>Portfolio</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -14,6 +15,7 @@
     <div class="min-h-screen flex">
 
         <!-- Sidebar -->
+        @auth
         <aside class="w-64 bg-gray-900 text-white min-h-screen hidden md:block">
             <div class="p-6 border-b border-gray-700">
                 <h1 class="text-xl font-bold">Admin Panel</h1>
@@ -49,6 +51,7 @@
 
             </nav>
         </aside>
+        @endauth
 
         <!-- Main Content -->
         <div class="flex-1">
@@ -56,11 +59,15 @@
             <!-- Navbar -->
             <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
                 <h2 class="text-xl font-semibold text-gray-800">
-                    Admin Dashboard
+                    Portfolio
                 </h2>
 
                 <span class="text-sm text-gray-600">
-                    {{ Auth::user()->name }}
+                    @auth
+                        {{ Auth::user()->name }}
+                    @else
+                        Pengunjung
+                    @endauth
                 </span>
             </header>
 

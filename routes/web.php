@@ -20,6 +20,10 @@ Route::get('/education', function () {
     return view('education');
 })->name('education');
 
+// Halaman daftar project publik
+Route::get('/projects', [PublicProjectController::class, 'index'])
+    ->name('projects.index');
+
 // Halaman detail project publik
 Route::get('/projects/{slug}', [PublicProjectController::class, 'show'])
     ->name('projects.public.show');

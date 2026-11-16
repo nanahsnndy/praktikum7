@@ -1,3 +1,4 @@
+
 @extends('posts.layouts.app')
 
 @section('content')
@@ -44,6 +45,28 @@
                     </option>
                 @endforeach
             </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="block mb-2">Teknologi yang Digunakan</label>
+
+            <div class="flex flex-wrap gap-4">
+                @forelse($technologies as $technology)
+                    <label class="flex items-center gap-2">
+                        <input
+                            type="checkbox"
+                            name="technologies[]"
+                            value="{{ $technology->id }}"
+                            {{ in_array($technology->id, old('technologies', [])) ? 'checked' : '' }}
+                        >
+                        {{ $technology->name }}
+                    </label>
+                @empty
+                    <p class="text-gray-500 text-sm">
+                        Belum ada teknologi yang tersedia.
+                    </p>
+                @endforelse
+            </div>
         </div>
 
         <div class="mb-4">

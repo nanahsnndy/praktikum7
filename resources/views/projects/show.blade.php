@@ -6,8 +6,8 @@
 
     <div class="bg-white rounded-lg shadow-md p-6">
 
-        <a href="/" class="text-blue-600 hover:underline">
-            &larr; Kembali ke halaman utama
+        <a href="{{ route('projects.index') }}" class="text-blue-600 hover:underline">
+            &larr; Kembali ke daftar project
         </a>
 
         <h1 class="text-3xl font-bold mt-4 mb-2">
@@ -28,9 +28,29 @@
             >
         @endif
 
+        @if($project->short_description)
+            <p class="text-lg text-gray-600 mb-4">
+                {{ $project->short_description }}
+            </p>
+        @endif
+
         <div class="text-gray-700 mb-8">
             {{ $project->description }}
         </div>
+
+        @if($project->technologies->count() > 0)
+            <h2 class="text-xl font-bold mb-3">
+                Technologies
+            </h2>
+
+            <div class="flex flex-wrap gap-2 mb-8">
+                @foreach($project->technologies as $technology)
+                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
+                        {{ $technology->name }}
+                    </span>
+                @endforeach
+            </div>
+        @endif
 
         @if($project->skills->count() > 0)
             <h2 class="text-xl font-bold mb-3">
@@ -43,6 +63,28 @@
                         {{ $skill->name }}
                     </span>
                 @endforeach
+            </div>
+        @endif
+
+        @if($project->project_url || $project->repository_url)
+            <div class="flex flex-wrap gap-4 mb-8">
+
+                @if($project->project_url)
+                    <a href="{{ $project->project_url }}"
+                       target="_blank"
+                       class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        Lihat Project
+                    </a>
+                @endif
+
+                @if($project->repository_url)
+                    <a href="{{ $project->repository_url }}"
+                       target="_blank"
+                       class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900">
+                        Lihat Repository
+                    </a>
+                @endif
+
             </div>
         @endif
 
