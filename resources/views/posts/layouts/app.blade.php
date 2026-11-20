@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,6 +46,11 @@
                 <a href="#"
                    class="block px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-800">
                     Skills
+                </a>
+
+                <a href="{{ route('post.contacts.index') }}"
+                   class="block px-4 py-3 rounded-lg {{ request()->routeIs('post.contacts.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800' }}">
+                    Pesan Masuk
                 </a>
 
             </nav>

@@ -6,6 +6,8 @@ use App\Http\Controllers\ProjectGalleryController;
 use App\Http\Controllers\PublicProjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ContactAdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,6 +33,16 @@ Route::get('/projects/{slug}', [PublicProjectController::class, 'show'])
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Halaman Contact Form
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+// Pengiriman pesan Contact Form dengan rate limiting
+Route::post('/contact', [ContactController::class, 'store'])
+    ->middleware('throttle:contact')
+    ->name('contact.store');
 
 Route::middleware('auth')->group(function () {
 
@@ -68,6 +80,13 @@ Route::middleware('auth')->group(function () {
 
         Route::delete('/projects/{project}/gallery/{image}', [ProjectGalleryController::class, 'destroy'])
             ->name('projects.gallery.destroy');
+
+        // Admin Contacts
+        Route::get('/contacts', [ContactAdminController::class, 'index'])
+            ->name('contacts.index');
+
+        Route::get('/contacts/{contact}', [ContactAdminController::class, 'show'])
+            ->name('contacts.show');
     });
 });
 
